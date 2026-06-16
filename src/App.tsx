@@ -16,14 +16,16 @@ function App() {
           <img src={viteLogo} className="vite" alt="Vite logo" />
         </div>
         <div>
-          <h1>Get started</h1>
+          <h1 className="text-3xl font-bold underline">
+            Get started
+          </h1>
           <p>
             Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
           </p>
         </div>
         <button
-          type="button"
-          className="counter"
+            type="button"
+            className="counter"
           onClick={() => setCount((count) => count + 1)}
         >
           Count is {count}
