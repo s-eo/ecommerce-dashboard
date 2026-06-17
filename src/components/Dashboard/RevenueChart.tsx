@@ -6,7 +6,7 @@ interface RevenueChartProps {
 
 export default function RevenueChart({ data }: RevenueChartProps) {
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-800">
+    <div className="bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-800 h-full">
       <div className="flex items-center justify-between mb-6">
         <div>
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Revenue Overview</h3>
@@ -44,7 +44,7 @@ export default function RevenueChart({ data }: RevenueChartProps) {
                 if (active && payload && payload.length) {
                   return (
                     <div className="bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 px-4 py-2 rounded-lg shadow-lg">
-                      <p className="text-sm font-medium">${payload[0].value.toLocaleString()}</p>
+                      <p className="text-sm font-medium">${payload[0]?.value?.toLocaleString()}</p>
                       <p className="text-xs text-gray-400 dark:text-gray-600">{payload[0].payload.date}</p>
                     </div>
                   );

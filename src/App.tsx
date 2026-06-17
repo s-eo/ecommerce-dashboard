@@ -13,9 +13,9 @@ import Settings from './pages/Settings';
 function App() {
   return (
     <BrowserRouter>
-      <div className="flex min-h-screen bg-gray-50 dark:bg-gray-950">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
         <Sidebar />
-        <div className="flex-1 ml-64">
+        <div className="ml-64">
           <TopBar />
           <Routes>
             <Route path="/" element={<Dashboard />} />

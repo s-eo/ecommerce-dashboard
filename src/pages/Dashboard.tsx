@@ -123,8 +123,6 @@ export default function Dashboard() {
 
   return (
     <div className="p-6 pt-20">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Dashboard</h1>
-      
       {/* Metric Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
         {metricsData.map((metric) => (
@@ -133,11 +131,11 @@ export default function Dashboard() {
       </div>
 
       {/* Revenue Chart and Recent Orders */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+        <div className="lg:col-span-1">
           <RevenueChart data={revenueData} />
         </div>
-        <div className="lg:col-span-1">
+        <div className="lg:col-span-1 max-h-[500px] overflow-y-auto">
           <RecentOrders orders={recentOrders} />
         </div>
       </div>

@@ -6,10 +6,10 @@ type MetricCardProps = Metric;
 
 export default function MetricCard({ title, value, change, color, data }: MetricCardProps) {
   const colorClasses = {
-    green: 'stroke-green-500',
-    blue: 'stroke-blue-500',
-    purple: 'stroke-purple-500',
-    orange: 'stroke-orange-500',
+    green: '#22c55e',
+    blue: '#3b82f6',
+    purple: '#a855f7',
+    orange: '#f97316',
   };
 
   return (
