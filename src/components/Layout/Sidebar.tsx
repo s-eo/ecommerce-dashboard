@@ -1,4 +1,4 @@
-import { Menu, X, LogOut, Crown } from 'lucide-react';
+import { LogOut, Crown } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const navigationItems = [

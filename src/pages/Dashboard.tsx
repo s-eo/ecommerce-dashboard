@@ -1,9 +1,10 @@
 import MetricCard from '../components/Dashboard/MetricCard';
 import RevenueChart from '../components/Dashboard/RevenueChart';
 import RecentOrders from '../components/Dashboard/RecentOrders';
+import type {Metric} from "../types.ts";
 
 export default function Dashboard() {
-  const metricsData = [
+  const metricsData: Array<Metric> = [
     {
       title: 'Revenue',
       value: '$128,430',

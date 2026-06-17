@@ -24,3 +24,18 @@ export type User = {
     status: "active" | "inactive";
     lastLogin: string;
 };
+
+export type MetricColor = 'green' | 'blue' | 'purple' | 'orange';
+export type WeekDay = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun';
+export type MetricData = {
+    name: WeekDay,
+    value: number
+}
+
+export type Metric = {
+    title: string,
+    value: string,
+    change: string,
+    color: MetricColor,
+    data: Array<MetricData>
+}

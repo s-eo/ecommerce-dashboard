@@ -1,13 +1,8 @@
 import { ArrowUp } from 'lucide-react';
 import { LineChart, Line, ResponsiveContainer, Tooltip } from 'recharts';
+import type {Metric} from "../../types.ts";
 
-interface MetricCardProps {
-  title: string;
-  value: string;
-  change: string;
-  color: string;
-  data: Array<{ name: string; value: number }>;
-}
+type MetricCardProps = Metric;
 
 export default function MetricCard({ title, value, change, color, data }: MetricCardProps) {
   const colorClasses = {
@@ -35,7 +30,7 @@ export default function MetricCard({ title, value, change, color, data }: Metric
             <Line
               type="monotone"
               dataKey="value"
-              stroke={color === 'green' ? '#22c55e' : color === 'blue' ? '#3b82f6' : color === 'purple' ? '#a855f7' : '#f97316'}
+              stroke={colorClasses[color]}
               strokeWidth={2}
               dot={false}
             />
