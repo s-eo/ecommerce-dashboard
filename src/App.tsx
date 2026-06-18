@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Layout/Sidebar';
 import TopBar from './components/Layout/TopBar';
@@ -11,12 +12,16 @@ import Marketing from './pages/Marketing';
 import Settings from './pages/Settings';
 
 function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
+
   return (
     <BrowserRouter>
       <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-        <Sidebar />
-        <div className="ml-64">
-          <TopBar />
+        <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+        <div className="xl:ml-64 transition-all duration-300">
+          <TopBar onMenuClick={toggleSidebar} />
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/products" element={<Products />} />

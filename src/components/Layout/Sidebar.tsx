@@ -12,11 +12,27 @@ const navigationItems = [
   // { name: 'Settings', path: '/settings' },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const location = useLocation();
 
   return (
-    <aside className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 flex flex-col h-screen fixed left-0 top-0 overflow-auto">
+    <>
+      {/* Overlay for mobile */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 xl:hidden"
+          onClick={onClose}
+        />
+      )}
+      
+      <aside className={`fixed left-0 top-0 h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 flex flex-col overflow-auto z-50 transition-transform duration-300 ${
+        isOpen ? 'translate-x-0' : '-translate-x-full'
+      } xl:translate-x-0 xl:z-0 w-64`}>
       {/* Logo */}
       <div className="p-4 border-b border-gray-200 dark:border-gray-800">
         <div className="flex items-center gap-3">
@@ -73,6 +89,7 @@ export default function Sidebar() {
           <span className="text-sm font-medium">Log out</span>
         </button>
       </div>
-    </aside>
+      </aside>
+    </>
   );
 }

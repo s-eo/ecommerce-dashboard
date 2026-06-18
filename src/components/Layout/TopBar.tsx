@@ -1,14 +1,21 @@
 import { Search, Bell, Moon, Sun, Menu } from 'lucide-react';
 import { useTheme } from '../Theme/ThemeContext';
 
-export default function TopBar() {
+interface TopBarProps {
+  onMenuClick: () => void;
+}
+
+export default function TopBar({ onMenuClick }: TopBarProps) {
   const { actualTheme, setTheme } = useTheme();
 
   return (
-    <header className="h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-6 fixed left-64 right-0 top-0 z-10">
+    <header className="h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-6 fixed left-0 right-0 top-0 z-10 xl:left-64">
       {/* Left side - Menu and Search */}
       <div className="flex items-center gap-4">
-        <button className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors">
+        <button 
+          onClick={onMenuClick}
+          className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-colors xl:hidden cursor-pointer"
+        >
           <Menu className="w-5 h-5 text-gray-600 dark:text-gray-400" />
         </button>
         <div className="relative">
