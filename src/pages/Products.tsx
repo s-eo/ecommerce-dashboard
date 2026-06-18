@@ -5,6 +5,12 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import {useQuery} from '@tanstack/react-query';
+import {useMemo} from "react";
+
+const PRODUCTS_API_URL = 'https://fakestoreapi.com/products';
+
+type ProductStatus = 'In Stock' | 'Out of Stock' | 'Low Stock';
 
 interface Product {
   id: number;
@@ -13,11 +19,7 @@ interface Product {
   description: string;
   category: string;
   image: string;
-  sku?: string;
-  stock?: number;
-  status?: 'In Stock' | 'Out of Stock' | 'Low Stock';
-  sales?: number;
-  created?: string;
+  status?: ProductStatus;
 }
 
 const statusColors = {
@@ -41,11 +43,8 @@ const columns = [
             className="w-10 h-10 rounded-lg object-cover"
           />
           <div>
-            <span className="text-sm font-medium text-gray-900 dark:text-white block">
+            <span className="text-sm font-medium text-gray-900 dark:text-white block max-w-[200px] overflow-hidden text-ellipsis">
               {product.title}
-            </span>
-            <span className="text-xs text-gray-500 dark:text-gray-400">
-              ID: {product.id}
             </span>
           </div>
         </div>
@@ -60,27 +59,11 @@ const columns = [
       </span>
     ),
   }),
-  columnHelper.accessor('sku', {
-    header: 'SKU',
-    cell: (info) => (
-      <span className="text-sm text-gray-700 dark:text-gray-300">
-        {info.getValue() || `SKU-${info.row.original.id}`}
-      </span>
-    ),
-  }),
   columnHelper.accessor('price', {
     header: 'Price',
     cell: (info) => (
       <span className="text-sm font-medium text-gray-900 dark:text-white">
         ${info.getValue().toFixed(2)}
-      </span>
-    ),
-  }),
-  columnHelper.accessor('stock', {
-    header: 'Stock',
-    cell: (info) => (
-      <span className="text-sm text-gray-700 dark:text-gray-300">
-        {info.getValue() ?? 0}
       </span>
     ),
   }),
@@ -95,22 +78,6 @@ const columns = [
       );
     },
   }),
-  columnHelper.accessor('sales', {
-    header: 'Sales',
-    cell: (info) => (
-      <span className="text-sm text-gray-700 dark:text-gray-300">
-        {info.getValue() ?? 0}
-      </span>
-    ),
-  }),
-  columnHelper.accessor('created', {
-    header: 'Created',
-    cell: (info) => (
-      <span className="text-sm text-gray-700 dark:text-gray-300">
-        {info.getValue() || 'May 16, 2024'}
-      </span>
-    ),
-  }),
   columnHelper.display({
     id: 'action',
     header: 'Actions',
@@ -122,139 +89,109 @@ const columns = [
   }),
 ];
 
-const hiddenColumns = ['sku', 'stock', 'status', 'sales', 'created'];
+const hiddenColumns = ['status'];
+
+const generateStatus = (): ProductStatus => {
+  const statuses: ProductStatus[] = ['In Stock', 'Out of Stock', 'Low Stock'];
+  return statuses[Math.floor(Math.random() * statuses.length)];
+};
+
+const appendStatus = (products: Product[]): Product[] => {
+  if (Array.isArray(products)) {
+    return products.map((product) => ({
+      ...product,
+      status: generateStatus(),
+    }));
+  }
+
+  return products;
+};
 
 export default function Products() {
-  const productsData: Product[] = [
-    {
-      id: 1,
-      title: 'Wireless Headphones',
-      price: 129.99,
-      description: 'High-quality wireless headphones with noise cancellation',
-      category: 'Electronics',
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=100&h=100&fit=crop',
-      sku: 'WH-001',
-      stock: 45,
-      status: 'In Stock',
-      sales: 234,
-      created: 'May 16, 2024',
-    },
-    {
-      id: 2,
-      title: 'Smart Watch',
-      price: 299.99,
-      description: 'Feature-rich smartwatch with health tracking',
-      category: 'Electronics',
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=100&h=100&fit=crop',
-      sku: 'SW-002',
-      stock: 12,
-      status: 'Low Stock',
-      sales: 189,
-      created: 'May 15, 2024',
-    },
-    {
-      id: 3,
-      title: 'Running Shoes',
-      price: 89.99,
-      description: 'Comfortable running shoes for daily exercise',
-      category: 'Footwear',
-      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=100&h=100&fit=crop',
-      sku: 'RS-003',
-      stock: 0,
-      status: 'Out of Stock',
-      sales: 456,
-      created: 'May 14, 2024',
-    },
-    {
-      id: 4,
-      title: 'Laptop Backpack',
-      price: 49.99,
-      description: 'Durable backpack with laptop compartment',
-      category: 'Accessories',
-      image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=100&h=100&fit=crop',
-      sku: 'LB-004',
-      stock: 78,
-      status: 'In Stock',
-      sales: 123,
-      created: 'May 13, 2024',
-    },
-    {
-      id: 5,
-      title: 'Desk Lamp',
-      price: 34.99,
-      description: 'LED desk lamp with adjustable brightness',
-      category: 'Home',
-      image: 'https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=100&h=100&fit=crop',
-      sku: 'DL-005',
-      stock: 56,
-      status: 'In Stock',
-      sales: 789,
-      created: 'May 12, 2024',
-    },
-  ];
+  const { isPending, error, data } = useQuery({
+    queryKey: ['repoData'],
+    queryFn: () =>
+        fetch(PRODUCTS_API_URL).then((res) =>
+            res.json(),
+        ),
+  });
+
+  const productData: Product[] = useMemo(() => appendStatus(data), [data]);
 
   const table = useReactTable({
-    data: productsData,
+    data: productData,
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
-  return (
-    <div className="p-6 pt-20">
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Products</h1>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-          Add Product
-        </button>
-      </div>
-      
-      <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full">
-            <thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id} className="border-b border-gray-200 dark:border-gray-800">
-                  {headerGroup.headers.map((header) => (
-                    <th
-                      key={header.id}
-                      className={`text-left py-4 px-6 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap ${
-                        header.id === 'action' ? 'text-right' : ''
-                      } ${
-                        hiddenColumns.includes(header.id) ? '@max-2xl:hidden' : ''
-                      }`}
+  if (isPending) {
+    return 'Loading...'
+  } else if (error) {
+    return 'An error has occurred: ' + error.message;
+  } else {
+    return (
+        <div className="px-6 pt-20">
+          <div className="flex items-center justify-between mb-6">
+            <div className="text-left">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Products</h2>
+              <p className="text-sm text-gray-500 dark:text-gray-400">Manage and view your store products</p>
+            </div>
+            <button
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+              Add Product
+            </button>
+          </div>
+
+
+          <div
+              className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden mt-10">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                {table.getHeaderGroups().map((headerGroup) => (
+                    <tr key={headerGroup.id} className="border-b border-gray-200 dark:border-gray-800">
+                      {headerGroup.headers.map((header) => (
+                          <th
+                              key={header.id}
+                              className={`text-left py-4 px-6 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap ${
+                                  header.id === 'action' ? 'text-right' : ''
+                              } ${
+                                  hiddenColumns.includes(header.id) ? '@max-2xl:hidden' : ''
+                              }`}
+                          >
+                            {header.isPlaceholder
+                                ? null
+                                : flexRender(header.column.columnDef.header, header.getContext())}
+                          </th>
+                      ))}
+                    </tr>
+                ))}
+                </thead>
+                <tbody>
+                {table.getRowModel().rows.map((row) => (
+                    <tr
+                        key={row.id}
+                        className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
                     >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody>
-              {table.getRowModel().rows.map((row) => (
-                <tr
-                  key={row.id}
-                  className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <td
-                      key={cell.id}
-                      className={`py-4 px-6 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap ${
-                        cell.column.id === 'action' ? 'text-right' : ''
-                      }${
-                        hiddenColumns.includes(cell.column.id) ? '@max-2xl:hidden' : ''
-                      }`}
-                    >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                      {row.getVisibleCells().map((cell) => (
+                          <td
+                              key={cell.id}
+                              className={`py-4 px-6 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap ${
+                                  cell.column.id === 'action' ? 'text-right' : ''
+                              }${
+                                  hiddenColumns.includes(cell.column.id) ? '@max-2xl:hidden' : ''
+                              }`}
+                          >
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </td>
+                      ))}
+                    </tr>
+                ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  );
+    );
+  }
 }

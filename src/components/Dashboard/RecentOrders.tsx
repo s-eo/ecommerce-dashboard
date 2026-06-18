@@ -1,4 +1,3 @@
-import { MoreVertical } from 'lucide-react';
 import {
   createColumnHelper,
   flexRender,
@@ -49,7 +48,7 @@ const columns = [
     },
   }),
   columnHelper.accessor('orderNumber', {
-    header: 'Order No.',
+    header: 'No.',
     cell: (info) => info.getValue(),
   }),
   columnHelper.accessor('date', {
@@ -75,17 +74,8 @@ const columns = [
       </span>
     ),
   }),
-  columnHelper.display({
-    id: 'action',
-    header: 'Action',
-    cell: () => (
-      <button className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors">
-        <MoreVertical className="w-4 h-4 text-gray-500" />
-      </button>
-    ),
-  }),
 ];
-const hiddenColumns = ['orderNumber', 'date', 'customer'];
+const hiddenColumns = ['date', 'customer'];
 
 export default function RecentOrders({ orders }: RecentOrdersProps) {
   const table = useReactTable({
@@ -95,7 +85,7 @@ export default function RecentOrders({ orders }: RecentOrdersProps) {
   });
 
   return (
-    <div className="@container h-full bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-800">
+    <div className="@container h-full flex flex-col bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-800">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-md lg:text-lg font-semibold text-gray-900 dark:text-white">Recent Orders</h3>
         <button className="text-xs lg:text-sm text-blue-600 dark:text-blue-400 hover:underline font-medium">
@@ -103,7 +93,7 @@ export default function RecentOrders({ orders }: RecentOrdersProps) {
         </button>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full">
+        <table className="w-full text-left">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id} className="border-b border-gray-200 dark:border-gray-800">
@@ -111,8 +101,6 @@ export default function RecentOrders({ orders }: RecentOrdersProps) {
                   <th
                     key={header.id}
                     className={`text-left py-3 px-3 text-xs lg:text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap ${
-                      header.id === 'action' ? 'text-right' : ''
-                    } ${
                       hiddenColumns.includes(header.id) ? '@max-2xl:hidden' : ''
                     }`}
                   >
@@ -134,8 +122,6 @@ export default function RecentOrders({ orders }: RecentOrdersProps) {
                   <td
                     key={cell.id}
                     className={`py-4 px-3 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap ${
-                      cell.column.id === 'action' ? 'text-right' : ''
-                    }${
                       hiddenColumns.includes(cell.column.id) ? '@max-2xl:hidden' : ''
                     }`}
                   >
@@ -147,7 +133,7 @@ export default function RecentOrders({ orders }: RecentOrdersProps) {
           </tbody>
         </table>
       </div>
-      <div className="mt-4 text-center">
+      <div className="mt-auto text-center">
         <button className="text-sm text-blue-600 dark:text-blue-400 hover:underline font-medium">
           View all orders
         </button>

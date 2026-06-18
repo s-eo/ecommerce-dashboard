@@ -82,7 +82,7 @@ export default function Dashboard() {
     {
       id: '1',
       customer: { name: 'Alice Johnson', avatar: 'AJ' },
-      orderNumber: '#ORD-001',
+      orderNumber: '#001',
       date: 'May 16, 2024',
       status: 'Processing' as const,
       amount: '$234.50',
@@ -90,7 +90,7 @@ export default function Dashboard() {
     {
       id: '2',
       customer: { name: 'Bob Smith', avatar: 'BS' },
-      orderNumber: '#ORD-002',
+      orderNumber: '#002',
       date: 'May 15, 2024',
       status: 'Delivered' as const,
       amount: '$189.00',
@@ -98,7 +98,7 @@ export default function Dashboard() {
     {
       id: '3',
       customer: { name: 'Carol White', avatar: 'CW' },
-      orderNumber: '#ORD-003',
+      orderNumber: '#003',
       date: 'May 14, 2024',
       status: 'Pending' as const,
       amount: '$456.75',
@@ -106,7 +106,7 @@ export default function Dashboard() {
     {
       id: '4',
       customer: { name: 'David Brown', avatar: 'DB' },
-      orderNumber: '#ORD-004',
+      orderNumber: '#004',
       date: 'May 13, 2024',
       status: 'Delivered' as const,
       amount: '$123.25',
@@ -114,7 +114,7 @@ export default function Dashboard() {
     {
       id: '5',
       customer: { name: 'Eva Martinez', avatar: 'EM' },
-      orderNumber: '#ORD-005',
+      orderNumber: '#005',
       date: 'May 12, 2024',
       status: 'Cancelled' as const,
       amount: '$789.00',

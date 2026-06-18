@@ -1,5 +1,9 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query';
 import Sidebar from './components/Layout/Sidebar';
 import TopBar from './components/Layout/TopBar';
 import Dashboard from './pages/Dashboard';
@@ -11,6 +15,8 @@ import Analytics from './pages/Analytics';
 import Marketing from './pages/Marketing';
 import Settings from './pages/Settings';
 
+const queryClient = new QueryClient()
+
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -18,7 +24,8 @@ function App() {
 
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <QueryClientProvider client={queryClient}>
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
         <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
         <div className="xl:ml-64 transition-all duration-300">
           <TopBar onMenuClick={toggleSidebar} />
@@ -34,6 +41,7 @@ function App() {
           </Routes>
         </div>
       </div>
+      </QueryClientProvider>
     </BrowserRouter>
   );
 }
