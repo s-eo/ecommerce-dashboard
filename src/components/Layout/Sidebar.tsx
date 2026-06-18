@@ -34,7 +34,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         isOpen ? 'translate-x-0' : '-translate-x-full'
       } xl:translate-x-0 xl:z-0 w-64`}>
       {/* Logo */}
-      <div className="p-4 border-b border-gray-200 dark:border-gray-800">
+      <div className="p-3 border-b border-gray-200 dark:border-gray-800">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">E</span>
@@ -44,7 +44,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       </div>
 
       {/* Navigation */}
-      <nav className="flex-1 p-4">
+      <nav className="flex-1 p-3">
         <ul className="space-y-1">
           {navigationItems.map((item) => {
             const isActive = location.pathname === item.path;
@@ -67,7 +67,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       </nav>
 
       {/* Upgrade Section */}
-      <div className="p-4 mt-auto">
+      <div className="p-3 mt-auto">
         <div className="bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl p-4 text-white">
           <div className="flex items-center gap-2 mb-2">
             <Crown className="w-5 h-5" />
@@ -83,7 +83,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       </div>
 
       {/* Logout */}
-      <div className="p-4 border-t border-gray-200 dark:border-gray-800">
+      <div className="p-3 border-t border-gray-200 dark:border-gray-800">
         <button className="flex items-center gap-3 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer">
           <LogOut className="w-5 h-5" />
           <span className="text-sm font-medium">Log out</span>

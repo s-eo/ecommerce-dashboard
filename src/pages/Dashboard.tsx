@@ -131,11 +131,11 @@ export default function Dashboard() {
       </div>
 
       {/* Revenue Chart and Recent Orders */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
-        <div className="lg:col-span-1">
+      <div className="grid grid-cols-1 xl:grid-cols-5 gap-6 items-stretch">
+        <div className="xl:col-span-3">
           <RevenueChart data={revenueData} />
         </div>
-        <div className="lg:col-span-1 max-h-[500px] overflow-y-auto">
+        <div className="xl:col-span-2 lg:max-h-[500px] min-h-[500px] overflow-y-auto">
           <RecentOrders orders={recentOrders} />
         </div>
       </div>

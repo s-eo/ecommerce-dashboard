@@ -85,16 +85,17 @@ const columns = [
     ),
   }),
 ];
+const hiddenColumns = ['orderNumber', 'date', 'customer'];
 
 export default function RecentOrders({ orders }: RecentOrdersProps) {
   const table = useReactTable({
-    data: orders,
+    data: orders.slice(0, 3),
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
-    <div className="bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-800">
+    <div className="@container h-full bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-800">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-md lg:text-lg font-semibold text-gray-900 dark:text-white">Recent Orders</h3>
         <button className="text-xs lg:text-sm text-blue-600 dark:text-blue-400 hover:underline font-medium">
@@ -109,8 +110,10 @@ export default function RecentOrders({ orders }: RecentOrdersProps) {
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className={`text-left py-3 px-4 text-xs lg:text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap ${
+                    className={`text-left py-3 px-3 text-xs lg:text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider whitespace-nowrap ${
                       header.id === 'action' ? 'text-right' : ''
+                    } ${
+                      hiddenColumns.includes(header.id) ? '@max-2xl:hidden' : ''
                     }`}
                   >
                     {header.isPlaceholder
@@ -130,8 +133,10 @@ export default function RecentOrders({ orders }: RecentOrdersProps) {
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
-                    className={`py-4 px-4 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap ${
+                    className={`py-4 px-3 text-sm text-gray-700 dark:text-gray-300 whitespace-nowrap ${
                       cell.column.id === 'action' ? 'text-right' : ''
+                    }${
+                      hiddenColumns.includes(cell.column.id) ? '@max-2xl:hidden' : ''
                     }`}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
