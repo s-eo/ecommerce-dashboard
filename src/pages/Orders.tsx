@@ -7,6 +7,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import type { Order, OrderStatus, PaymentMethod } from '../types';
+import { useOrders } from '../hooks/useOrders';
 
 const statusColors: Record<OrderStatus, string> = {
   Processing: 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
@@ -123,149 +124,9 @@ const columns = [
   }),
 ];
 
-const mockOrders: Order[] = [
-  {
-    id: '1',
-    orderNumber: '#ORD-001',
-    customer: {
-      id: '1',
-      name: 'Alice Johnson',
-      email: 'alice@example.com',
-      avatar: 'AJ',
-    },
-    items: [
-      { id: '1', name: 'Wireless Headphones', image: 'https://fakestoreapi.com/img/81fPKd-2h7L._AC_SL1500_.jpg', quantity: 1, price: 99.99 },
-      { id: '2', name: 'Phone Case', image: 'https://fakestoreapi.com/img/81QpkIctqPL._AC_SL1500_.jpg', quantity: 2, price: 19.99 },
-    ],
-    total: 139.97,
-    paymentMethod: 'Credit Card',
-    status: 'Processing',
-    date: 'May 16, 2024 10:30 AM',
-  },
-  {
-    id: '2',
-    orderNumber: '#ORD-002',
-    customer: {
-      id: '2',
-      name: 'Bob Smith',
-      email: 'bob@example.com',
-      avatar: 'BS',
-    },
-    items: [
-      { id: '3', name: 'Smart Watch', image: 'https://fakestoreapi.com/img/71pW4hdQVnL._AC_UL640_QL65_ML3_.jpg', quantity: 1, price: 199.99 },
-    ],
-    total: 199.99,
-    paymentMethod: 'PayPal',
-    status: 'Delivered',
-    date: 'May 15, 2024 2:15 PM',
-  },
-  {
-    id: '3',
-    orderNumber: '#ORD-003',
-    customer: {
-      id: '3',
-      name: 'Carol White',
-      email: 'carol@example.com',
-      avatar: 'CW',
-    },
-    items: [
-      { id: '4', name: 'Laptop Stand', image: 'https://fakestoreapi.com/img/71YXzoO-uL._AC_UL640_QL65_ML3_.jpg', quantity: 1, price: 49.99 },
-      { id: '5', name: 'USB Hub', image: 'https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg', quantity: 1, price: 29.99 },
-    ],
-    total: 79.98,
-    paymentMethod: 'Bank Transfer',
-    status: 'Pending',
-    date: 'May 14, 2024 9:45 AM',
-  },
-  {
-    id: '4',
-    orderNumber: '#ORD-004',
-    customer: {
-      id: '4',
-      name: 'David Brown',
-      email: 'david@example.com',
-      avatar: 'DB',
-    },
-    items: [
-      { id: '6', name: 'Mechanical Keyboard', image: 'https://fakestoreapi.com/img/61U7T1lutQ._AC_SY879_.jpg', quantity: 1, price: 149.99 },
-    ],
-    total: 149.99,
-    paymentMethod: 'Credit Card',
-    status: 'Delivered',
-    date: 'May 13, 2024 4:20 PM',
-  },
-  {
-    id: '5',
-    orderNumber: '#ORD-005',
-    customer: {
-      id: '5',
-      name: 'Eva Martinez',
-      email: 'eva@example.com',
-      avatar: 'EM',
-    },
-    items: [
-      { id: '7', name: 'Wireless Mouse', image: 'https://fakestoreapi.com/img/81QpkIctqPL._AC_SL1500_.jpg', quantity: 2, price: 39.99 },
-    ],
-    total: 79.98,
-    paymentMethod: 'PayPal',
-    status: 'Cancelled',
-    date: 'May 12, 2024 11:00 AM',
-  },
-  {
-    id: '6',
-    orderNumber: '#ORD-006',
-    customer: {
-      id: '6',
-      name: 'Frank Wilson',
-      email: 'frank@example.com',
-      avatar: 'FW',
-    },
-    items: [
-      { id: '8', name: 'Monitor Arm', image: 'https://fakestoreapi.com/img/71YXzoO-uL._AC_UL640_QL65_ML3_.jpg', quantity: 1, price: 89.99 },
-    ],
-    total: 89.99,
-    paymentMethod: 'Credit Card',
-    status: 'Refunded',
-    date: 'May 11, 2024 3:30 PM',
-  },
-  {
-    id: '7',
-    orderNumber: '#ORD-007',
-    customer: {
-      id: '7',
-      name: 'Grace Lee',
-      email: 'grace@example.com',
-      avatar: 'GL',
-    },
-    items: [
-      { id: '9', name: 'Webcam', image: 'https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg', quantity: 1, price: 79.99 },
-      { id: '10', name: 'Microphone', image: 'https://fakestoreapi.com/img/81fPKd-2h7L._AC_SL1500_.jpg', quantity: 1, price: 129.99 },
-    ],
-    total: 209.98,
-    paymentMethod: 'Bank Transfer',
-    status: 'Processing',
-    date: 'May 10, 2024 1:15 PM',
-  },
-  {
-    id: '8',
-    orderNumber: '#ORD-008',
-    customer: {
-      id: '8',
-      name: 'Henry Davis',
-      email: 'henry@example.com',
-      avatar: 'HD',
-    },
-    items: [
-      { id: '11', name: 'Desk Lamp', image: 'https://fakestoreapi.com/img/71pW4hdQVnL._AC_UL640_QL65_ML3_.jpg', quantity: 1, price: 34.99 },
-    ],
-    total: 34.99,
-    paymentMethod: 'Cash',
-    status: 'Delivered',
-    date: 'May 9, 2024 10:00 AM',
-  },
-];
 
 export default function Orders() {
+  const { data: orders = [], isLoading } = useOrders();
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<OrderStatus | 'all'>('all');
   const [paymentFilter, setPaymentFilter] = useState<PaymentMethod | 'all'>('all');
@@ -274,7 +135,7 @@ export default function Orders() {
   const itemsPerPage = 8;
 
   const filteredOrders = useMemo(() => {
-    return mockOrders.filter((order) => {
+    return orders.filter((order) => {
       const matchesSearch = 
         order.orderNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
         order.customer.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -283,7 +144,7 @@ export default function Orders() {
       const matchesPayment = paymentFilter === 'all' || order.paymentMethod === paymentFilter;
       return matchesSearch && matchesStatus && matchesPayment;
     });
-  }, [mockOrders, searchTerm, statusFilter, paymentFilter]);
+  }, [orders, searchTerm, statusFilter, paymentFilter]);
 
   const paginatedOrders = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -293,14 +154,14 @@ export default function Orders() {
   const totalPages = Math.ceil(filteredOrders.length / itemsPerPage);
 
   const stats = useMemo(() => {
-    const totalOrders = mockOrders.length;
-    const totalRevenue = mockOrders.reduce((sum, order) => sum + order.total, 0);
-    const deliveredOrders = mockOrders.filter(o => o.status === 'Delivered').length;
-    const pendingOrders = mockOrders.filter(o => o.status === 'Pending').length;
-    const cancelledOrders = mockOrders.filter(o => o.status === 'Cancelled').length;
+    const totalOrders = orders.length;
+    const totalRevenue = orders.reduce((sum, order) => sum + order.total, 0);
+    const deliveredOrders = orders.filter(o => o.status === 'Delivered').length;
+    const pendingOrders = orders.filter(o => o.status === 'Pending').length;
+    const cancelledOrders = orders.filter(o => o.status === 'Cancelled').length;
 
     return { totalOrders, totalRevenue, deliveredOrders, pendingOrders, cancelledOrders };
-  }, [mockOrders]);
+  }, [orders]);
 
   const table = useReactTable({
     data: paginatedOrders,
@@ -440,79 +301,87 @@ export default function Orders() {
 
       {/* Orders Table */}
       <div className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <tr key={headerGroup.id} className="border-b border-gray-200 dark:border-gray-800">
-                  {headerGroup.headers.map((header) => (
-                    <th
-                      key={header.id}
-                      className="py-4 px-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
-                    >
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(header.column.columnDef.header, header.getContext())}
-                    </th>
-                  ))}
-                </tr>
-              ))}
-            </thead>
-            <tbody>
-              {table.getRowModel().rows.map((row) => (
-                <tr
-                  key={row.id}
-                  className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <td
-                      key={cell.id}
-                      className="py-4 px-4 text-sm text-gray-700 dark:text-gray-300"
-                    >
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        {/* Pagination */}
-        <div className="border-t border-gray-200 dark:border-gray-800 px-4 py-3 flex items-center justify-between">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Showing {Math.min((currentPage - 1) * itemsPerPage + 1, filteredOrders.length)} to {Math.min(currentPage * itemsPerPage, filteredOrders.length)} of {filteredOrders.length} orders
-          </p>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className="px-3 py-1 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Previous
-            </button>
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => setCurrentPage(page)}
-                className={`px-3 py-1 rounded-lg transition-colors ${
-                  currentPage === page
-                    ? 'bg-blue-600 text-white'
-                    : 'border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
-                }`}
-              >
-                {page}
-              </button>
-            ))}
-            <button
-              onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-              disabled={currentPage === totalPages}
-              className="px-3 py-1 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Next
-            </button>
+        {isLoading ? (
+          <div className="p-8 text-center text-gray-500 dark:text-gray-400">
+            Loading orders...
           </div>
-        </div>
+        ) : (
+          <>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  {table.getHeaderGroups().map((headerGroup) => (
+                    <tr key={headerGroup.id} className="border-b border-gray-200 dark:border-gray-800">
+                      {headerGroup.headers.map((header) => (
+                        <th
+                          key={header.id}
+                          className="py-4 px-4 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+                        >
+                          {header.isPlaceholder
+                            ? null
+                            : flexRender(header.column.columnDef.header, header.getContext())}
+                        </th>
+                      ))}
+                    </tr>
+                  ))}
+                </thead>
+                <tbody>
+                  {table.getRowModel().rows.map((row) => (
+                    <tr
+                      key={row.id}
+                      className="border-b border-gray-100 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"
+                    >
+                      {row.getVisibleCells().map((cell) => (
+                        <td
+                          key={cell.id}
+                          className="py-4 px-4 text-sm text-gray-700 dark:text-gray-300"
+                        >
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Pagination */}
+            <div className="border-t border-gray-200 dark:border-gray-800 px-4 py-3 flex items-center justify-between">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Showing {Math.min((currentPage - 1) * itemsPerPage + 1, filteredOrders.length)} to {Math.min(currentPage * itemsPerPage, filteredOrders.length)} of {filteredOrders.length} orders
+            </p>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                className="px-3 py-1 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Previous
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentPage(page)}
+                  className={`px-3 py-1 rounded-lg transition-colors ${
+                    currentPage === page
+                      ? 'bg-blue-600 text-white'
+                      : 'border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
+                  }`}
+                >
+                  {page}
+                </button>
+              ))}
+              <button
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                className="px-3 py-1 border border-gray-200 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+          </>
+        )}
       </div>
     </div>
   );
