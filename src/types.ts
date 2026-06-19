@@ -1,13 +1,15 @@
 export type Category = 'electronics' | 'clothing' | 'shoes' | 'beauty';
 
+export type ProductStatus = 'In Stock' | 'Out of Stock' | 'Low Stock';
+
 export interface Product {
-    id: string;
+    id: number;
     title: string;
     price: number;
     description: string;
-    category: Category;
-    stock: number;
+    category: string;
     image: string;
+    status?: ProductStatus;
 }
 
 type UserRole =
@@ -38,4 +40,33 @@ export type Metric = {
     change: string,
     color: MetricColor,
     data: Array<MetricData>
+}
+
+export type OrderStatus = 'Processing' | 'Delivered' | 'Pending' | 'Cancelled' | 'Refunded';
+export type PaymentMethod = 'Credit Card' | 'PayPal' | 'Bank Transfer' | 'Cash';
+
+export type OrderItem = {
+    id: string;
+    name: string;
+    image: string;
+    quantity: number;
+    price: number;
+}
+
+export type Customer = {
+    id: string;
+    name: string;
+    email: string;
+    avatar: string;
+}
+
+export type Order = {
+    id: string;
+    orderNumber: string;
+    customer: Customer;
+    items: OrderItem[];
+    total: number;
+    paymentMethod: PaymentMethod;
+    status: OrderStatus;
+    date: string;
 }
