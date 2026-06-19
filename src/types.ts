@@ -53,11 +53,29 @@ export type OrderItem = {
     price: number;
 }
 
+export type CustomerGroup = 'VIP' | 'Regular' | 'New';
+export type CustomerStatus = 'Active' | 'Inactive';
+
 export type Customer = {
     id: string;
     name: string;
     email: string;
     avatar: string;
+    group: CustomerGroup;
+    totalOrders: number;
+    totalSpent: number;
+    location: string;
+    country: string;
+    status: CustomerStatus;
+    joinedAt: string;
+}
+
+export type CustomerStats = {
+    totalCustomers: number;
+    newCustomers: number;
+    repeatCustomers: number;
+    avgOrderValue: number;
+    totalSpent: number;
 }
 
 export type Order = {
