@@ -181,7 +181,6 @@ export default function Orders() {
     <div className="p-6 pt-20">
       {/* Header */}
       <div className="mb-6 text-left">
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Orders</h2>
         <p className="text-sm text-gray-500 dark:text-gray-400">Manage and view store orders</p>
       </div>
 

@@ -153,8 +153,7 @@ export default function Products() {
         <div className="px-6 pt-20">
           <div className="flex items-center justify-between mb-6">
             <div className="text-left">
-              <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Products</h2>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Manage and view your store products</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">Manage and view your store products</p>
             </div>
             <Link to="/product/new">
               <button

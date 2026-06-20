@@ -34,7 +34,6 @@ export default function NewProduct() {
         <form
             className="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4 mb-6 mt-20"
             onSubmit={handleSubmit(onSubmit)}>
-            <h2 className="text-left">Create new product</h2>
             <div className="flex mt-7">
                 <div className="w-1/2">
                     <div className={formLineClasses}>
