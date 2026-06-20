@@ -1,3 +1,4 @@
+import {useMemo, useState} from "react";
 import { MoreVertical, Search, Plus, Package, DollarSign, AlertCircle, TrendingUp } from 'lucide-react';
 import {
   createColumnHelper,
@@ -6,21 +7,11 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import {useQuery} from '@tanstack/react-query';
-import {useMemo, useState} from "react";
+import { Link } from "react-router";
+
+import type {Product, ProductStatus} from "../types.ts";
 
 const PRODUCTS_API_URL = 'https://fakestoreapi.com/products';
-
-type ProductStatus = 'In Stock' | 'Out of Stock' | 'Low Stock';
-
-interface Product {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-  status?: ProductStatus;
-}
 
 const statusColors = {
   'In Stock': 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
@@ -165,11 +156,13 @@ export default function Products() {
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Products</h2>
               <p className="text-sm text-gray-500 dark:text-gray-400">Manage and view your store products</p>
             </div>
-            <button
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2">
-              <Plus className="w-4 h-4"/>
-              Add Product
-            </button>
+            <Link to="/product/new">
+              <button
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 cursor-pointer">
+                <Plus className="w-4 h-4"/>
+                Add Product
+              </button>
+            </Link>
           </div>
 
           {/* Statistic Cards */}

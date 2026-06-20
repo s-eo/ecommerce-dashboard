@@ -14,6 +14,7 @@ import Users from './pages/Users';
 import Analytics from './pages/Analytics';
 import Marketing from './pages/Marketing';
 import Settings from './pages/Settings';
+import NewProduct from './pages/NewProduct';
 
 const queryClient = new QueryClient()
 
@@ -32,6 +33,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/products" element={<Products />} />
+            <Route path="/product/new" element={<NewProduct />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/customers" element={<Customers />} />
             <Route path="/users" element={<Users />} />
