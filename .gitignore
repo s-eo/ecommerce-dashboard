@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+/dashboard.png
+/products.png
+/orders.png
+/customers.png
