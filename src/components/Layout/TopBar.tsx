@@ -11,6 +11,7 @@ const pathNames: Record<string, string> = {
   '/products': 'Products',
   '/product/new': 'Create new product',
   '/orders': 'Orders',
+  '/order/new': 'Create New Order',
   '/customers': 'Customers',
   '/users': 'Users',
   '/analytics': 'Analytics',

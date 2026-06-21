@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { Search, Calendar, Download, Plus, Filter, X, Package, DollarSign, CheckCircle, Clock, XCircle } from 'lucide-react';
 import {
   createColumnHelper,
@@ -291,10 +292,10 @@ export default function Orders() {
             <Download className="w-4 h-4" />
             Export
           </button>
-          <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center gap-2">
+          <Link to="/order/new" role='button' className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center gap-2">
             <Plus className="w-4 h-4" />
             Create Order
-          </button>
+          </Link>
         </div>
       </div>
 

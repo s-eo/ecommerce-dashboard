@@ -15,6 +15,7 @@ import Analytics from './pages/Analytics';
 import Marketing from './pages/Marketing';
 import Settings from './pages/Settings';
 import NewProduct from './pages/NewProduct';
+import NewOrder from './pages/NewOrder';
 
 const queryClient = new QueryClient()
 
@@ -35,6 +36,7 @@ function App() {
             <Route path="/products" element={<Products />} />
             <Route path="/product/new" element={<NewProduct />} />
             <Route path="/orders" element={<Orders />} />
+            <Route path="/order/new" element={<NewOrder />} />
             <Route path="/customers" element={<Customers />} />
             <Route path="/users" element={<Users />} />
             <Route path="/analytics" element={<Analytics />} />
