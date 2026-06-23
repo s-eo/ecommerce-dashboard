@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import type { Order } from '../types';
 
 // Mock data for orders with updated customer fields
-const mockOrders: Order[] = [
+export const mockOrders: Order[] = [
   {
     id: '1',
     orderNumber: '#ORD-001',

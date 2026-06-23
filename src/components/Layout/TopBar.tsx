@@ -1,16 +1,32 @@
 import { Bell, Moon, Sun, Menu } from 'lucide-react';
 import { useTheme } from '../Theme/ThemeContext';
+import { useLocation } from 'react-router-dom';
 
 interface TopBarProps {
   onMenuClick: () => void;
 }
 
+const pathNames: Record<string, string> = {
+  '/': 'Dashboard',
+  '/products': 'Products',
+  '/product/new': 'Create new product',
+  '/orders': 'Orders',
+  '/order/new': 'Create New Order',
+  '/customers': 'Customers',
+  '/users': 'Users',
+  '/analytics': 'Analytics',
+  '/marketing': 'Marketing',
+  '/settings': 'Settings',
+};
+
 export default function TopBar({ onMenuClick }: TopBarProps) {
   const { actualTheme, setTheme } = useTheme();
+  const location = useLocation();
+  const currentPath = pathNames[location.pathname] || 'Dashboard';
 
   return (
     <header className="h-16 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-6 fixed left-0 right-0 top-0 z-10 xl:left-64">
-      {/* Left side - Menu and Search */}
+      {/* Left side - Menu and Path */}
       <div className="flex items-center gap-4">
         <button 
           onClick={onMenuClick}
@@ -18,6 +34,7 @@ export default function TopBar({ onMenuClick }: TopBarProps) {
         >
           <Menu className="w-5 h-5 text-gray-600 dark:text-gray-400" />
         </button>
+        <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{currentPath}</h2>
       </div>
 
       {/* Right side - Actions */}

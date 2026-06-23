@@ -10,6 +10,7 @@ Current version is available [here](https://ecommerce-eo.netlify.app/)
 - TanStack Query
 - TanStack Table
 - React Hook Form
+- Recharts
 
 ## Planning to add
 - Zod

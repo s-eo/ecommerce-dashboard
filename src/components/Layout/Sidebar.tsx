@@ -34,7 +34,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
         isOpen ? 'translate-x-0' : '-translate-x-full'
       } xl:translate-x-0 xl:z-0 w-64`}>
       {/* Logo */}
-      <div className="p-3 border-b border-gray-200 dark:border-gray-800">
+      <div className="h-16 p-4 border-b border-gray-200 dark:border-gray-800">
         <div className="flex items-center gap-3">
           <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">E</span>
