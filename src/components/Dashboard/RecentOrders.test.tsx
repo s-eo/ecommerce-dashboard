@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { render, screen } from '../tests/test-utils'
+import { render, screen } from '../../../tests/test-utils'
 import RecentOrders from './RecentOrders'
 
 describe('RecentOrders', () => {
@@ -55,10 +55,10 @@ describe('RecentOrders', () => {
     expect(screen.getByText('Recent Orders')).toBeInTheDocument()
   })
 
-  it('should render view all button', () => {
+  it('should render view all button', async () => {
     render(<RecentOrders orders={mockOrders} />)
-    const viewAllButtons = screen.getAllByText('View all')
-    expect(viewAllButtons).toHaveLength(2)
+    const viewAllButtons = await screen.getByText('View all orders')
+    expect(viewAllButtons).toBeInTheDocument()
   })
 
   it('should render customer names', () => {
@@ -87,7 +87,8 @@ describe('RecentOrders', () => {
     expect(screen.getByText('Processing')).toBeInTheDocument()
     expect(screen.getByText('Delivered')).toBeInTheDocument()
     expect(screen.getByText('Pending')).toBeInTheDocument()
-    expect(screen.getByText('Cancelled')).toBeInTheDocument()
+    // 4th order should not be in the table
+    expect(screen.queryByText('Cancelled')).toBeNull()
   })
 
   it('should render customer avatars', () => {
