@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { render, screen } from '../tests/test-utils'
+import { render, screen } from '../../../tests/test-utils'
 import MetricCard from './MetricCard'
 import type { Metric } from '../../types'
 
