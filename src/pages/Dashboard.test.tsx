@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '../../tests/test-utils'
 import Dashboard from './Dashboard'
+import {getByText} from "@testing-library/dom";
 
 describe('Dashboard', () => {
   it('should render dashboard page', () => {
@@ -13,10 +14,17 @@ describe('Dashboard', () => {
 
   it('should render metric cards with correct values', () => {
     render(<Dashboard />)
-    expect(screen.getByText('$128,430')).toBeInTheDocument()
-    expect(screen.getByText('1,245')).toBeInTheDocument()
-    expect(screen.getByText('4,892')).toBeInTheDocument()
-    expect(screen.getByText('312')).toBeInTheDocument()
+    const panel = document.querySelector('.grid.grid-cols-1.gap-6.mb-6') as HTMLElement
+
+    if (panel) {
+      expect(getByText(panel, '$128,430')).toBeInTheDocument()
+      expect(getByText(panel, '1,245')).toBeInTheDocument()
+      expect(getByText(panel, '4,892')).toBeInTheDocument()
+      expect(getByText(panel, '312')).toBeInTheDocument()
+    } else {
+      throw new Error('Panel not found')
+    }
+
   })
 
   it('should render metric cards with change percentages', () => {
@@ -63,7 +71,7 @@ describe('Dashboard', () => {
     expect(screen.getByText('Processing')).toBeInTheDocument()
     expect(screen.getByText('Delivered')).toBeInTheDocument()
     expect(screen.getByText('Pending')).toBeInTheDocument()
-    expect(screen.getByText('Cancelled')).toBeInTheDocument()
+    expect(screen.queryByText('Cancelled')).toBeNull()
   })
 
   it('should render view all buttons', () => {

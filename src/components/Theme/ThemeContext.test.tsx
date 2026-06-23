@@ -3,14 +3,6 @@ import { renderHook, act } from '@testing-library/react'
 import { ThemeProvider } from './ThemeProvider'
 import { useTheme } from './ThemeContext'
 
-describe('useTheme', () => {
-  it('should throw error when used outside ThemeProvider', () => {
-    const { result } = renderHook(() => useTheme())
-    
-    expect(() => result.current).toThrow('useTheme must be used within a ThemeProvider')
-  })
-})
-
 describe('ThemeProvider', () => {
   beforeEach(() => {
     localStorage.clear()

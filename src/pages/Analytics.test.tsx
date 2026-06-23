@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '../../tests/test-utils'
+import {getByText} from "@testing-library/dom";
 import Analytics from './Analytics'
 
 describe('Analytics', () => {
@@ -31,7 +32,7 @@ describe('Analytics', () => {
     render(<Analytics />)
     expect(screen.getByText('+20.1%')).toBeInTheDocument()
     expect(screen.getByText('+15.3%')).toBeInTheDocument()
-    expect(screen.getByText('+12.5%')).toBeInTheDocument()
+    expect(screen.getAllByText('+12.5%').length).toBeGreaterThan(0)
     expect(screen.getByText('+4.2%')).toBeInTheDocument()
     expect(screen.getByText('+0.8%')).toBeInTheDocument()
   })
@@ -103,10 +104,17 @@ describe('Analytics', () => {
 
   it('should render customer insight values', () => {
     render(<Analytics />)
-    expect(screen.getByText('156')).toBeInTheDocument()
-    expect(screen.getByText('736')).toBeInTheDocument()
-    expect(screen.getByText('$1,245.32')).toBeInTheDocument()
-    expect(screen.getByText('2.4%')).toBeInTheDocument()
+    const insights = screen.getByText('Customer Insights').parentElement
+
+    if (insights) {
+      expect(getByText(insights, '156')).toBeInTheDocument()
+      expect(getByText(insights, '736')).toBeInTheDocument()
+      expect(getByText(insights, '$1,245.32')).toBeInTheDocument()
+      expect(getByText(insights, '2.4%')).toBeInTheDocument()
+    } else {
+      throw new Error('Insights element not found')
+    }
+
   })
 
   it('should render footer text', () => {
@@ -116,9 +124,11 @@ describe('Analytics', () => {
 
   it('should render table headers for top products', () => {
     render(<Analytics />)
-    expect(screen.getByText('Product')).toBeInTheDocument()
-    expect(screen.getByText('Sales')).toBeInTheDocument()
-    expect(screen.getByText('Revenue')).toBeInTheDocument()
+    const table = screen.getAllByRole('table')[0]
+
+    expect(getByText(table, 'Product')).toBeInTheDocument()
+    expect(getByText(table, 'Sales')).toBeInTheDocument()
+    expect(getByText(table, 'Revenue')).toBeInTheDocument()
   })
 
   it('should render table headers for top categories', () => {
