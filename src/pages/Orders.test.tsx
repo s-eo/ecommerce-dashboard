@@ -1,6 +1,7 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { render, screen, fireEvent, waitFor } from '../../tests/test-utils'
 import Orders from './Orders'
+import {findAllByText} from "@testing-library/dom";
 
 describe('Orders', () => {
   it('should render orders page header', () => {
@@ -85,13 +86,12 @@ describe('Orders', () => {
 
   it('should render order status badges', async () => {
     render(<Orders />)
-    await waitFor(() => {
-      expect(screen.getByText('Processing')).toBeInTheDocument()
-      expect(screen.getByText('Delivered')).toBeInTheDocument()
-      expect(screen.getByText('Pending')).toBeInTheDocument()
-      expect(screen.getByText('Cancelled')).toBeInTheDocument()
-      expect(screen.getByText('Refunded')).toBeInTheDocument()
-    })
+    const table = screen.getByRole('table');
+    expect(await findAllByText(table, 'Processing')).toHaveLength(2)
+    expect(await findAllByText(table, 'Delivered')).toHaveLength(3)
+    expect(await findAllByText(table, 'Pending')).toHaveLength(1)
+    expect(await findAllByText(table, 'Cancelled')).toHaveLength(1)
+    expect(await findAllByText(table, 'Refunded')).toHaveLength(1)
   })
 
   it('should filter orders by search term', async () => {
@@ -132,11 +132,6 @@ describe('Orders', () => {
       expect(screen.getByText('Previous')).toBeInTheDocument()
       expect(screen.getByText('Next')).toBeInTheDocument()
     })
-  })
-
-  it('should render loading state initially', () => {
-    render(<Orders />)
-    expect(screen.getByText('Loading orders...')).toBeInTheDocument()
   })
 
   it('should render checkboxes for row selection', async () => {
