@@ -3,7 +3,6 @@ import { render, screen } from '../tests/test-utils';
 
 import App from "./App";
 import {ThemeProvider} from "./components/Theme/ThemeProvider.tsx";
-import {BrowserRouter} from "react-router-dom";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {type ReactNode} from "react";
 
