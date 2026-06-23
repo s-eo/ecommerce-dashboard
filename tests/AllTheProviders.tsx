@@ -13,12 +13,12 @@ const queryClient = new QueryClient({
 
 export default function AllTheProviders ({children}: {children: React.ReactNode}) {
     return (
-        <BrowserRouter>
-            <QueryClientProvider client={queryClient}>
-                <ThemeProvider>
+        <QueryClientProvider client={queryClient}>
+            <ThemeProvider>
+                <BrowserRouter>
                     {children}
-                </ThemeProvider>
-            </QueryClientProvider>
-        </BrowserRouter>
+                </BrowserRouter>
+            </ThemeProvider>
+        </QueryClientProvider>
     )
 }
