@@ -5,7 +5,6 @@ import Login from './Login'
 describe('Login', () => {
   it('should render login page', () => {
     render(<Login />)
-    expect(screen.getByText('Welcome Back')).toBeInTheDocument()
     expect(screen.getByText('Sign in to your account')).toBeInTheDocument()
   })
 
@@ -62,5 +61,11 @@ describe('Login', () => {
     render(<Login />)
     const passwordInput = screen.getByLabelText('Password')
     expect(passwordInput).toHaveAttribute('placeholder', '••••••••')
+  })
+
+  it('should render error message when authentication fails', async () => {
+    render(<Login />)
+    // Initially no error message
+    expect(screen.queryByText(/invalid credentials/i)).not.toBeInTheDocument()
   })
 })

@@ -12,20 +12,17 @@ export interface Product {
     status?: ProductStatus;
 }
 
-type UserRole =
-    | "admin"
-    | "manager"
-    | "support"
-    | "viewer";
+// type UserRole =
+//     | "admin"
+//     | "manager"
+//     | "support"
+//     | "viewer";
 
-export type User = {
-    id: string;
+export interface User {
     name: string;
     email: string;
-    role: UserRole;
-    status: "active" | "inactive";
-    lastLogin: string;
-};
+    role: string;
+}
 
 export type MetricColor = 'green' | 'blue' | 'purple' | 'orange';
 export type WeekDay = 'Mon' | 'Tue' | 'Wed' | 'Thu' | 'Fri' | 'Sat' | 'Sun';

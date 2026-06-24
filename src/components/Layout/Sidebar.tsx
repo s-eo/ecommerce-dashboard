@@ -1,5 +1,7 @@
 import { LogOut, Crown } from 'lucide-react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useUser } from '../../User/UserContext';
+import Logo from "./Logo.tsx";
 
 const navigationItems = [
   { name: 'Dashboard', path: '/' },
@@ -19,6 +21,13 @@ interface SidebarProps {
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const location = useLocation();
+  const navigate = useNavigate();
+  const { logout } = useUser();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/login');
+  };
 
   return (
     <>
@@ -33,16 +42,8 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
       <aside className={`fixed left-0 top-0 h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 flex flex-col overflow-auto z-50 transition-transform duration-300 ${
         isOpen ? 'translate-x-0' : '-translate-x-full'
       } xl:translate-x-0 xl:z-0 w-64`}>
-      {/* Logo */}
-      <div className="h-16 p-4 border-b border-gray-200 dark:border-gray-800">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-            <span className="text-white font-bold text-sm">E</span>
-          </div>
-          <span className="font-semibold text-gray-900 dark:text-white text-sm lg:text-md">Ecom Store</span>
-        </div>
-      </div>
 
+      <Logo />
       {/* Navigation */}
       <nav className="flex-1 p-3">
         <ul className="space-y-1">
@@ -84,7 +85,7 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
 
       {/* Logout */}
       <div className="p-3 border-t border-gray-200 dark:border-gray-800">
-        <button className="flex items-center gap-3 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer">
+        <button onClick={handleLogout} className="flex items-center gap-3 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors cursor-pointer">
           <LogOut className="w-5 h-5" />
           <span className="text-sm font-medium">Log out</span>
         </button>
