@@ -2,6 +2,7 @@ import React from "react";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ThemeProvider} from "../src/components/Theme/ThemeProvider";
 import {BrowserRouter} from "react-router-dom";
+import {UserProvider} from "../src/User/UserProvider.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -16,7 +17,9 @@ export default function AllTheProviders ({children}: {children: React.ReactNode}
         <QueryClientProvider client={queryClient}>
             <ThemeProvider>
                 <BrowserRouter>
-                    {children}
+                    <UserProvider>
+                        {children}
+                    </UserProvider>
                 </BrowserRouter>
             </ThemeProvider>
         </QueryClientProvider>

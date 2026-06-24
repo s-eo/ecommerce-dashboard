@@ -1,24 +1,38 @@
-import {type ReactNode, useState} from "react";
+import {type ReactNode, useEffect, useState} from "react";
 
 import {UserContext} from "./UserContext";
 import type {User} from "../types.ts";
 
-const USER_STORAGE_KEY = 'user';
+const mockMe = async (token: string | null): Promise<{ user: User }> => {
+    // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // if token is valid
+    if (token) {
+        return {
+            user: {
+                name: 'John Doe',
+                email: 'john.doe@example.com',
+                role: 'Admin',
+            },
+        };
+    }
+
+    throw new Error('Invalid token or not sent');
+};
 
 export function UserProvider({ children }: { children: ReactNode }) {
-    const [user, setUserState] = useState<User | null>(() => {
-        const storedUser = localStorage.getItem(USER_STORAGE_KEY);
-        return storedUser ? JSON.parse(storedUser) : null;
-    });
+    const [user, setUser] = useState<User | null>(null);
 
-    const setUser = (userData: User | null) => {
-        setUserState(userData);
-        if (userData) {
-            localStorage.setItem(USER_STORAGE_KEY, JSON.stringify(userData));
-        } else {
-            localStorage.removeItem(USER_STORAGE_KEY);
-        }
-    };
+    useEffect(() => {
+        mockMe(localStorage.getItem('token'))
+            .then(data => {
+                setUser(data.user);
+            })
+            .catch(() => {
+                setUser(null);
+            });
+    }, []);
 
     const logout = () => {
         setUser(null);

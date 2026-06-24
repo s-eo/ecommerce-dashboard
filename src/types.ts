@@ -12,12 +12,6 @@ export interface Product {
     status?: ProductStatus;
 }
 
-// type UserRole =
-//     | "admin"
-//     | "manager"
-//     | "support"
-//     | "viewer";
-
 export interface User {
     name: string;
     email: string;
