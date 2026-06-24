@@ -17,6 +17,7 @@ const pathNames: Record<string, string> = {
   '/analytics': 'Analytics',
   '/marketing': 'Marketing',
   '/settings': 'Settings',
+  '/login': 'Welcome back',
 };
 
 export default function TopBar({ onMenuClick }: TopBarProps) {

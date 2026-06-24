@@ -13,6 +13,7 @@ import Marketing from './pages/Marketing';
 import Settings from './pages/Settings';
 import NewProduct from './pages/NewProduct';
 import NewOrder from './pages/NewOrder';
+import Login from './pages/Login';
 
 function App() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -26,6 +27,7 @@ function App() {
         <div className="xl:ml-64 transition-all duration-300">
           <TopBar onMenuClick={toggleSidebar} />
           <Routes>
+            <Route path="/login" element={<Login />} />
             <Route path="/" element={<Dashboard />} />
             <Route path="/products" element={<Products />} />
             <Route path="/product/new" element={<NewProduct />} />
