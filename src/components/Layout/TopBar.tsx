@@ -1,7 +1,7 @@
 import { Bell, Moon, Sun, Menu } from 'lucide-react';
 import { useTheme } from '../Theme/ThemeContext';
 import { useLocation } from 'react-router-dom';
-import { useUser } from '../../User/UserContext';
+import { useUser } from '../User/UserContext';
 import Logo from "./Logo.tsx";
 
 interface TopBarProps {

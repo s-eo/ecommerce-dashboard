@@ -2,7 +2,7 @@ import { useState, type SubmitEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import Modal from '../components/Modal';
-import { useUser } from '../User/UserContext';
+import { useUser } from '../components/User/UserContext';
 
 interface SignupCredentials {
   name: string;

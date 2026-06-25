@@ -1,9 +1,10 @@
 import { describe, it, expect, vi } from 'vitest'
-import { render, screen, fireEvent } from '../../../tests/test-utils'
+import { render, screen, fireEvent, waitFor } from '../../../tests/test-utils'
 import { MemoryRouter } from 'react-router-dom'
 import TopBar from './TopBar'
-import type {ReactNode} from "react";
+import {type ReactNode} from "react";
 import {ThemeProvider} from "../Theme/ThemeProvider.tsx";
+import {UserProvider} from "../User/UserProvider.tsx";
 
 describe('TopBar', () => {
   const mockOnMenuClick = vi.fn()
@@ -15,12 +16,14 @@ describe('TopBar', () => {
     expect(mockOnMenuClick).toHaveBeenCalled()
   })
 
-  it('should render current path name', () => {
+  it('should render current path name for Products', () => {
     const wrapper = (props: { children: ReactNode }): ReactNode =>
         <MemoryRouter initialEntries={['/products'] }>
-          <ThemeProvider>
-            {props.children}
-          </ThemeProvider>
+            <ThemeProvider>
+                <UserProvider>
+                    {props.children}
+                </UserProvider>
+            </ThemeProvider>
         </MemoryRouter>
     render(<TopBar onMenuClick={mockOnMenuClick} />, { wrapper })
     expect(screen.getByText('Products')).toBeInTheDocument()
@@ -29,9 +32,11 @@ describe('TopBar', () => {
   it('should render default Dashboard title for root path', () => {
     const wrapper = (props: { children: ReactNode }): ReactNode =>
         <MemoryRouter initialEntries={['/'] }>
-          <ThemeProvider>
-            {props.children}
-          </ThemeProvider>
+            <ThemeProvider>
+                <UserProvider>
+                    {props.children}
+                </UserProvider>
+            </ThemeProvider>
         </MemoryRouter>
     render(<TopBar onMenuClick={mockOnMenuClick} />, { wrapper })
     expect(screen.getByText('Dashboard')).toBeInTheDocument()
@@ -50,11 +55,14 @@ describe('TopBar', () => {
     expect(buttons.length).toBeGreaterThan(0)
   })
 
-  it('should render user profile', () => {
+  it('should render user profile', async () => {
+    window.localStorage.setItem('token', 'qwerty');
     render(<TopBar onMenuClick={mockOnMenuClick} />)
-    expect(screen.getByText('John Doe')).toBeInTheDocument()
-    expect(screen.getByText('Admin')).toBeInTheDocument()
-    expect(screen.getByText('JD')).toBeInTheDocument()
+    await waitFor(() => {
+        expect(screen.getByText('John Doe')).toBeInTheDocument()
+        expect(screen.getByText('Admin')).toBeInTheDocument()
+        expect(screen.getByText('JD')).toBeInTheDocument()
+    }, { timeout: 2000 })
   })
 
   it('should render notification badge', () => {
@@ -66,9 +74,11 @@ describe('TopBar', () => {
   it('should display correct path for analytics', () => {
     const wrapper = (props: { children: ReactNode }): ReactNode =>
         <MemoryRouter initialEntries={['/analytics'] }>
-          <ThemeProvider>
-            {props.children}
-          </ThemeProvider>
+            <ThemeProvider>
+              <UserProvider>
+                  {props.children}
+              </UserProvider>
+            </ThemeProvider>
         </MemoryRouter>
     render(<TopBar onMenuClick={mockOnMenuClick} />, { wrapper })
     expect(screen.getByText('Analytics')).toBeInTheDocument()
@@ -77,9 +87,11 @@ describe('TopBar', () => {
   it('should display correct path for customers', () => {
     const wrapper = (props: { children: ReactNode }): ReactNode =>
         <MemoryRouter initialEntries={['/customers'] }>
-          <ThemeProvider>
-            {props.children}
-          </ThemeProvider>
+            <ThemeProvider>
+                <UserProvider>
+                    {props.children}
+                </UserProvider>
+            </ThemeProvider>
         </MemoryRouter>
     render(<TopBar onMenuClick={mockOnMenuClick} />, { wrapper })
     expect(screen.getByText('Customers')).toBeInTheDocument()
@@ -88,9 +100,11 @@ describe('TopBar', () => {
   it('should display correct path for orders', () => {
     const wrapper = (props: { children: ReactNode }): ReactNode =>
         <MemoryRouter initialEntries={['/orders'] }>
-          <ThemeProvider>
-            {props.children}
-          </ThemeProvider>
+            <ThemeProvider>
+                <UserProvider>
+                    {props.children}
+                </UserProvider>
+            </ThemeProvider>
         </MemoryRouter>
     render(<TopBar onMenuClick={mockOnMenuClick} />, { wrapper })
     expect(screen.getByText('Orders')).toBeInTheDocument()

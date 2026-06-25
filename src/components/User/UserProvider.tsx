@@ -1,7 +1,7 @@
 import {type ReactNode, useEffect, useState} from "react";
 
-import {UserContext} from "./UserContext";
-import type {User} from "../types.ts";
+import {UserContext} from "./UserContext.tsx";
+import type {User} from "../../types.ts";
 
 const mockMe = async (token: string | null): Promise<{ user: User }> => {
     // Simulate API delay

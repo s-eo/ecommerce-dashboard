@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import type {User} from "../types.ts";
+import type {User} from "../../types.ts";
 
 
 interface UserContextType {

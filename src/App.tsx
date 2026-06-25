@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import { UserProvider } from './User/UserProvider';
+import { UserProvider } from './components/User/UserProvider';
 import ProtectedRoute from './components/CustomRoutes/ProtectedRoute.tsx';
 import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';

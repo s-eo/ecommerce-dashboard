@@ -1,6 +1,6 @@
 import { LogOut, Crown } from 'lucide-react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useUser } from '../../User/UserContext';
+import { useUser } from '../User/UserContext';
 import Logo from "./Logo.tsx";
 
 const navigationItems = [

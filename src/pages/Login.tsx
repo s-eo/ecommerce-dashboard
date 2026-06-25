@@ -1,7 +1,7 @@
 import { useState, type SubmitEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { useUser } from '../User/UserContext';
+import { useUser } from '../components/User/UserContext';
 
 interface LoginCredentials {
   email: string;
