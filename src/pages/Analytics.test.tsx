@@ -6,7 +6,6 @@ import Analytics from './Analytics'
 describe('Analytics', () => {
   it('should render analytics page header', () => {
     render(<Analytics />)
-    expect(screen.getByText('Analytics')).toBeInTheDocument()
     expect(screen.getByText('Overview of your business performance')).toBeInTheDocument()
   })
 

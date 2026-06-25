@@ -22,7 +22,7 @@ export default function RevenueChart({ data }: RevenueChartProps) {
         </select>
       </div>
       <div className="h-80">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width="100%" height="100%"  initialDimension={{ width: 444, height: 487 }}>
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" strokeOpacity={0.5} />
             <XAxis

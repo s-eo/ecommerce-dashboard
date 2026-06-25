@@ -4,6 +4,7 @@ import {
   getCoreRowModel,
   useReactTable,
 } from '@tanstack/react-table';
+import {Link} from "react-router-dom";
 
 interface Order {
   id: string;
@@ -88,9 +89,9 @@ export default function RecentOrders({ orders }: RecentOrdersProps) {
     <div className="@container h-full flex flex-col bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-800">
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-md lg:text-lg font-semibold text-gray-900 dark:text-white">Recent Orders</h3>
-        <button className="text-xs lg:text-sm text-blue-600 dark:text-blue-400 hover:underline font-medium">
+        <Link to="/orders" role="button"  className="text-xs lg:text-sm text-blue-600 dark:text-blue-400 hover:underline font-medium">
           View all
-        </button>
+        </Link>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full text-left">
@@ -134,9 +135,9 @@ export default function RecentOrders({ orders }: RecentOrdersProps) {
         </table>
       </div>
       <div className="mt-auto text-center">
-        <button className="text-sm text-blue-600 dark:text-blue-400 hover:underline font-medium">
+        <Link to="/orders" role="button" className="text-sm text-blue-600 dark:text-blue-400 hover:underline font-medium">
           View all orders
-        </button>
+        </Link>
       </div>
     </div>
   );

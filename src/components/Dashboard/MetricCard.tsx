@@ -25,7 +25,7 @@ export default function MetricCard({ title, value, change, color, data }: Metric
         </div>
       </div>
       <div className="h-16">
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer initialDimension={{ width: 70, height: 155 }} width="100%" height="100%">
           <LineChart data={data}>
             <Line
               type="monotone"

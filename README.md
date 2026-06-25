@@ -11,9 +11,12 @@ Current version is available [here](https://ecommerce-eo.netlify.app/)
 - TanStack Table
 - React Hook Form
 - Recharts
-
-## Planning to add
-- Zod
-- shadcn/ui
 - Vitest
-- RTL
+- React Testing Library
+
+## Planning to add backend on
+- Node.js
+-  Express
+- TypeScript
+- PostgreSQL
+- Prisma
