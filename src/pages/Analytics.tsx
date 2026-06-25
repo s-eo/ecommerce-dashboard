@@ -93,7 +93,9 @@ const MetricCard = ({ title, value, change, positive, icon: Icon }: MetricCardPr
 
 const InsightCard = ({ title, value, change, positive }: Insight) => (
   <div className="bg-white dark:bg-gray-900 rounded-xl p-6 border border-gray-200 dark:border-gray-800">
-    <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-2">{title}</h3>
+    <div className="h-[3rem]">
+      <h3 className="text-gray-500 dark:text-gray-400 text-sm font-medium mb-2">{title}</h3>
+    </div>
     <div className="flex flex-wrap items-center justify-between">
       <p className="text-2xl font-bold text-gray-900 dark:text-white">{value}</p>
       <div className={`flex items-center gap-1 text-sm ${positive ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
