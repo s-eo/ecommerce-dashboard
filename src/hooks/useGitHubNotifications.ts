@@ -9,8 +9,8 @@ export function useGitHubNotifications(repoOwner: string, repoName: string) {
   const checkForUpdates = async () => {
     try {
       // Update environment variables for this check
-      process.env.VITE_GITHUB_REPO_OWNER = repoOwner;
-      process.env.VITE_GITHUB_REPO_NAME = repoName;
+      import.meta.env.VITE_GITHUB_REPO_OWNER = repoOwner;
+      import.meta.env.VITE_GITHUB_REPO_NAME = repoName;
 
       const currentInfo = await fetchGitHubInfo();
 

@@ -17,9 +17,9 @@ A complete Express + Prisma backend is included in the repository and can be run
 - Vitest
 - React Testing Library
 
-## Planning to add backend on
+## Backend stack is
 - Node.js
--  Express
+- Express
 - TypeScript
 - PostgreSQL
 - Prisma

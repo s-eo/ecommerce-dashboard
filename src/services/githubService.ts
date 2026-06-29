@@ -22,8 +22,8 @@ export interface GitHubInfo {
   lastChecked: Date;
 }
 
-const GITHUB_REPO_OWNER = process.env.VITE_GITHUB_REPO_OWNER || 'your-username';
-const GITHUB_REPO_NAME = process.env.VITE_GITHUB_REPO_NAME || 'your-repo';
+const GITHUB_REPO_OWNER = import.meta.env.VITE_GITHUB_REPO_OWNER || 'your-username';
+const GITHUB_REPO_NAME = import.meta.env.VITE_GITHUB_REPO_NAME || 'your-repo';
 
 export async function fetchLatestRelease(): Promise<GitHubRelease | null> {
   try {
