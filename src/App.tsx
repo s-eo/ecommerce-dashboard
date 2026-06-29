@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { UserProvider } from './components/User/UserProvider';
+import { NotificationProvider } from './components/Notification/NotificationProvider';
+import { Notification } from './components/Notification/Notification';
 import ProtectedRoute from './components/CustomRoutes/ProtectedRoute.tsx';
 import Dashboard from './pages/Dashboard';
 import Products from './pages/Products';
@@ -23,31 +25,34 @@ function App() {
 
   return (
       <BrowserRouter>
-        <UserProvider>
-          <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
-            <Routes>
-              <Route element={<AnAuthRoute />}>
-                <Route path="/login" element={<Login/>}/>
-                <Route path="/signup" element={<Signup/>}/>
-              </Route>
-              <Route element={<ProtectedRoute
-                  isSidebarOpen={isSidebarOpen}
-                  setIsSidebarOpen={setIsSidebarOpen}
-              />}>
-                <Route path="/" element={<Dashboard/>} ErrorBoundary={ErrorBoundary}/>
-                <Route path="/products" element={<Products/>}/>
-                <Route path="/product/new" element={<NewProduct/>}/>
-                <Route path="/orders" element={<Orders/>}/>
-                <Route path="/order/new" element={<NewOrder/>}/>
-                <Route path="/customers" element={<Customers/>}/>
-                <Route path="/users" element={<Users/>}/>
-                <Route path="/analytics" element={<Analytics/>}/>
-                <Route path="/marketing" element={<Marketing/>}/>
-                <Route path="/settings" element={<Settings/>}/>
-              </Route>
-            </Routes>
-          </div>
-        </UserProvider>
+        <NotificationProvider>
+          <UserProvider>
+            <div className="min-h-screen bg-gray-50 dark:bg-gray-950">
+              <Notification />
+              <Routes>
+                <Route element={<AnAuthRoute />}>
+                  <Route path="/login" element={<Login/>}/>
+                  <Route path="/signup" element={<Signup/>}/>
+                </Route>
+                <Route element={<ProtectedRoute
+                    isSidebarOpen={isSidebarOpen}
+                    setIsSidebarOpen={setIsSidebarOpen}
+                />}>
+                  <Route path="/" element={<Dashboard/>} ErrorBoundary={ErrorBoundary}/>
+                  <Route path="/products" element={<Products/>}/>
+                  <Route path="/product/new" element={<NewProduct/>}/>
+                  <Route path="/orders" element={<Orders/>}/>
+                  <Route path="/order/new" element={<NewOrder/>}/>
+                  <Route path="/customers" element={<Customers/>}/>
+                  <Route path="/users" element={<Users/>}/>
+                  <Route path="/analytics" element={<Analytics/>}/>
+                  <Route path="/marketing" element={<Marketing/>}/>
+                  <Route path="/settings" element={<Settings/>}/>
+                </Route>
+              </Routes>
+            </div>
+          </UserProvider>
+        </NotificationProvider>
       </BrowserRouter>
   );
 }

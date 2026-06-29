@@ -2,8 +2,14 @@ import MetricCard from '../components/Dashboard/MetricCard';
 import RevenueChart from '../components/Dashboard/RevenueChart';
 import RecentOrders from '../components/Dashboard/RecentOrders';
 import type {Metric} from "../types.ts";
+import { useGitHubNotifications } from '../hooks/useGitHubNotifications';
 
 export default function Dashboard() {
+  // Initialize GitHub notifications with repo owner and name from env or defaults
+  const repoOwner = import.meta.env.VITE_GITHUB_REPO_OWNER || 'your-username';
+  const repoName = import.meta.env.VITE_GITHUB_REPO_NAME || 'your-repo';
+  useGitHubNotifications(repoOwner, repoName);
+
   const metricsData: Array<Metric> = [
     {
       title: 'Revenue',
