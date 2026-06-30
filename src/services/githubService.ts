@@ -19,6 +19,7 @@ interface GitHubCommit {
 export interface GitHubInfo {
   latestVersion: string;
   latestBuild: string;
+  latestBuildMessage: string;
   lastChecked: Date;
 }
 
@@ -73,6 +74,7 @@ export async function fetchGitHubInfo(): Promise<GitHubInfo> {
   return {
     latestVersion: release?.tag_name || 'No releases',
     latestBuild: commit?.sha.substring(0, 7) || 'No commits',
+    latestBuildMessage: commit?.commit.message || '',
     lastChecked: new Date(),
   };
 }

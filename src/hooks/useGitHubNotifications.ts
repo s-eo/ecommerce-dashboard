@@ -16,10 +16,11 @@ export function useGitHubNotifications(repoOwner: string, repoName: string) {
 
       if (lastInfoRef.current) {
         // Check if version changed
-        if (currentInfo.latestVersion !== lastInfoRef.current.latestVersion && 
+        if (currentInfo.latestVersion !== lastInfoRef.current.latestVersion &&
             currentInfo.latestVersion !== 'No releases') {
           addNotification({
-            message: `New version available: ${currentInfo.latestVersion}`,
+            message: `New version available: ${currentInfo.latestVersion}.
+             ${currentInfo.latestBuildMessage}`,
             type: 'info',
           });
         }

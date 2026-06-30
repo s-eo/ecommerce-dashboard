@@ -44,7 +44,7 @@ export function Notification() {
   };
 
   return (
-    <div className="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full">
+    <div className="fixed text-left top-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full">
       {notifications.map(notification => (
         <div
           key={notification.id}
