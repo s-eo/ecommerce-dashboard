@@ -1,7 +1,12 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { render, screen } from '../../tests/test-utils'
 import Dashboard from './Dashboard'
 import {getByText} from "@testing-library/dom";
+
+// Mock the githubService
+vi.mock('../services/githubService', () => ({
+  fetchGitHubInfo: vi.fn(),
+}))
 
 describe('Dashboard', () => {
   it('should render dashboard page', () => {

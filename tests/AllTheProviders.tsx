@@ -3,6 +3,7 @@ import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ThemeProvider} from "../src/components/Theme/ThemeProvider";
 import {BrowserRouter} from "react-router-dom";
 import {UserProvider} from "../src/components/User/UserProvider.tsx";
+import {NotificationProvider} from "../src/components/Notification/NotificationProvider.tsx";
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -15,13 +16,15 @@ const queryClient = new QueryClient({
 export default function AllTheProviders ({children}: {children: React.ReactNode}) {
     return (
         <QueryClientProvider client={queryClient}>
-            <ThemeProvider>
-                <BrowserRouter>
-                    <UserProvider>
-                        {children}
-                    </UserProvider>
-                </BrowserRouter>
-            </ThemeProvider>
+            <NotificationProvider>
+                <ThemeProvider>
+                    <BrowserRouter>
+                        <UserProvider>
+                            {children}
+                        </UserProvider>
+                    </BrowserRouter>
+                </ThemeProvider>
+            </NotificationProvider>
         </QueryClientProvider>
     )
 }
